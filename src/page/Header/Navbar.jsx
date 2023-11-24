@@ -1,5 +1,31 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 const Navbar = () => {
+    const { user, Logout } = useAuth();
+    const handelButton = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, LogOut'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Logout()
+                    .then(result => {
+                        console.log(result);
+                        Swal.fire('Logout succesfull');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            }
+        })
+
+    }
     const link = <>
         <li className="font-semibold text-lg dark:text-white"><NavLink to="/"> Home</NavLink></li>
         <li className="font-semibold text-lg dark:text-white"><NavLink to="/donationRequests"> Donation requests</NavLink></li>
@@ -33,20 +59,22 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end gap-1">
                     {/* <div className="hidden md:block dark:text-white ">
+                        {
+                            user && <p>{user?.displayName.slice(0, 10)}</p>
+                        }
+                    </div> */}
+
                     {
-                        user && <p>{user?.email.slice(0, 10)}</p>
+                        user && <img className="w-10 h-10 md:w-14 md:h-14 mx-1 rounded-full" src={user?.photoURL} alt="" />
+
                     }
-                </div>
+                    {
+                        user ? "" : <Link to="/login" className="btn">Login</Link>
+                    }
+                    {/* {
+                        user ? <button onClick={handelButton} className="btn">LogOut</button> : <Link to="/login" className="btn">Login</Link>
+                    } */}
 
-                {
-                    user && <img className="w-10 h-10 md:w-14 md:h-14 mx-1 rounded-full" src={user?.photoURL} alt="" />
-
-                }
-                {
-                    user ? <button onClick={handelButton} className="btn">LogOut</button> : <Link to="/login" className="btn">Login</Link>
-                } */}
-
-                    {/* <input onClick={handelClick} type="checkbox" className="toggle" /> */}
                 </div>
             </div>
         </div>

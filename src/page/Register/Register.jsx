@@ -1,10 +1,18 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import imageUpload from '../../api/utils';
 
 const Register = () => {
     const [AllDivision, setDivision] = useState([])
     const [AllDistrict, setDistrict] = useState([])
+    const [registerError, setRegisterError] = useState('');
+    const { register, updateUserProfile } = useAuth()
+    const axiosPublic = useAxiosPublic()
+
     useEffect(() => {
         axios.get('devision.json')
             .then(res => {
@@ -17,7 +25,52 @@ const Register = () => {
                 setDistrict(res.data);
             })
     }, [])
-    const handelForm = (e) => {
+    const handelForm = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        const confirmPassword = form.ConfirmPassword.value;
+        const division = form.division.value;
+        const district = form.district.value;
+        const blood = form.blood.value;
+        const photoURL = form.imgUrl.files[0];
+        const user = { name, email, password, confirmPassword, division, district, blood, photoURL }
+
+
+        setRegisterError('')
+        // if (password.length < 6) {
+        //     return Swal.fire('Password must be at least 6 characters');
+
+        // } if (!/[A-Z]/.test(password)) {
+        //     return Swal.fire('Password must be a Uppercase letter');
+
+        // }
+        // if (!/[a-z]/.test(password)) {
+        //     return Swal.fire('Password must be a Lowercase letter');
+
+        // }
+        // if (!/[0-9]/.test(password)) {
+        //     return Swal.fire('Password must be a number ')
+
+        // }
+        // if (!(password == confirmPassword)) {
+        //     return Swal.fire('password or confirmPassword not equal ')
+        // }
+        try {
+            const image = await imageUpload(photoURL)
+            const result = await register(email, password);
+            await updateUserProfile(name, image?.data?.display_url)
+            console.log(result.user);
+            if (result?.user?.email) {
+                Swal.fire('register successful ')
+            }
+        } catch (error) {
+            setRegisterError(error.message);
+        }
+
+
 
     }
     return (
@@ -71,7 +124,7 @@ const Register = () => {
                                             <label className="label">
                                                 <span className="label-text">Division</span>
                                             </label>
-                                            <select className="select select-bordered w-full  input ">
+                                            <select name="division" className="select select-bordered w-full  input ">
                                                 <option disabled selected required>Select Your Division</option>
                                                 {
                                                     AllDivision.map(division => <option key={division.id}>{division.name}</option>)
@@ -83,7 +136,7 @@ const Register = () => {
                                             <label className="label">
                                                 <span className="label-text">Division</span>
                                             </label>
-                                            <select className="select select-bordered w-full  input ">
+                                            <select name="district" className="select select-bordered w-full  input ">
                                                 <option disabled selected required>Select Your District</option>
                                                 {
                                                     AllDistrict.map(district => <option key={district.id}>{district.name}</option>)
@@ -95,7 +148,7 @@ const Register = () => {
                                             <label className="label">
                                                 <span className="label-text">imgUrl</span>
                                             </label>
-                                            <select className="select select-bordered w-full  input ">
+                                            <select name="blood" className="select select-bordered w-full  input ">
                                                 <option disabled selected>Select Your Blood Group</option>
                                                 <option >A+</option>
                                                 <option >A- </option>
@@ -124,7 +177,7 @@ const Register = () => {
                                         <p className="text-xl">you have Account  please<Link to="/login" className="text-red-600 text-2xl ml-3">login</Link></p>
                                     </div>
                                     <div className="text-center">
-                                        <h1 className="text-red-500">registerError</h1>
+                                        <h1 className="text-red-500">{registerError}</h1>
                                     </div>
                                 </div>
                             </form>

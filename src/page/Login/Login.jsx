@@ -2,12 +2,30 @@ import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import { useState } from "react";
 
 const Login = () => {
-    // const { logInWithGoogle } = useContext(AuthContext);
-    const { logInWithGoogle } = useAuth();
-    const handelForm = (e) => {
 
+    const { logInWithGoogle, login } = useAuth();
+    const [error, setError] = useState('');
+    const handelForm = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
+        setError('')
+        login(email, password)
+            .then((result) => {
+
+                if (result.user) {
+                    Swal.fire('Login Successful');
+                    form.reset();
+                }
+            })
+            .catch((error) => {
+                setError(error.message);
+            })
     }
     const googleClick = () => {
         logInWithGoogle()
@@ -52,7 +70,7 @@ const Login = () => {
                                 <p>You do not have an Account Please <Link to="/register" className="text-red-600 text-2xl">Register</Link></p>
                             </div>
                             <div className="text-center">
-                                <h1 className="text-red-500">error</h1>
+                                <h1 className="text-red-500">{error}</h1>
                             </div>
                         </div>
                     </form>
