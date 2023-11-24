@@ -3,7 +3,7 @@ import Tilt from 'react-parallax-tilt';
 const Featured = () => {
     return (
         <div className="lg:flex justify-between">
-            <div className="lg:w-1/2 my-20">
+            <div className="lg:w-1/2 p-20 ">
                 <Tilt>
                     <div style={{ height: '300px', backgroundColor: 'darkgreen' }}>
                         <img className="w-full h-full" src="https://i.ibb.co/hm3qp9X/5573383.jpg" alt="" />
@@ -11,7 +11,7 @@ const Featured = () => {
                     </div>
                 </Tilt>
             </div>
-            <div className="lg:w-1/2 lg:my-20 my-10">
+            <div className="lg:w-1/2 p-20">
                 <h1 className="text-5xl font-bold text-center lg:text-start">Welcome to Blood Donors Organization</h1>
                 <p className="my-6 text-center lg:text-start">Blood donation is a life-saving act. Each donation can save up to three lives. Learn about the impact of blood donation and join the cause to make a difference today</p>
                 <div className="flex justify-evenly lg:justify-between">

@@ -9,7 +9,7 @@ const Navbar = () => {
     </>
     return (
         <div>
-            <div className="navbar bg-base-100 dark:bg-slate-800">
+            <div className="navbar z-50 bg-base-100 dark:bg-slate-800">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost dark:text-white lg:hidden">

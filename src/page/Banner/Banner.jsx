@@ -14,7 +14,7 @@ const Banner = () => {
                             <Link to="/register">
                                 <button className='text-white bg-red-600 btn border-none'><BiSolidDonateBlood></BiSolidDonateBlood> Join as a donor</button>
                             </Link>
-                            <Link to="/search page">
+                            <Link to="/search">
                                 <button className='text-white bg-red-600 btn border-none'><FaSearch></FaSearch> Search Donors</button>
                             </Link>
                         </div>
