@@ -1,5 +1,6 @@
 import { FaSearch } from 'react-icons/fa';
 import { BiSolidDonateBlood } from "react-icons/bi";
+import { Link } from 'react-router-dom';
 const Banner = () => {
     return (
         <div>
@@ -10,8 +11,12 @@ const Banner = () => {
                         <h1 className="mb-5 text-4xl md:text-5xl font-bold ">Save lives, donate blood!</h1>
                         <p className="mb-5">Join the grant Blood Donation Drive today. Your contribution can make a significant impact. Be a hero, be a donor. Visit our website or nearest grant store to participate and make a difference.</p>
                         <div className='flex gap-3 justify-center '>
-                            <button className='text-white bg-red-600 btn border-none'><BiSolidDonateBlood></BiSolidDonateBlood> Join as a donor</button>
-                            <button className='text-white bg-red-600 btn border-none'><FaSearch></FaSearch> Search Donors</button>
+                            <Link to="/register">
+                                <button className='text-white bg-red-600 btn border-none'><BiSolidDonateBlood></BiSolidDonateBlood> Join as a donor</button>
+                            </Link>
+                            <Link to="/search page">
+                                <button className='text-white bg-red-600 btn border-none'><FaSearch></FaSearch> Search Donors</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
