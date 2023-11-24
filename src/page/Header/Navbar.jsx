@@ -1,6 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import { CgProfile } from "react-icons/cg";
+import { TbLogout } from "react-icons/tb";
+import { FiLogIn } from "react-icons/fi";
 const Navbar = () => {
     const { user, Logout } = useAuth();
     const handelButton = () => {
@@ -31,7 +34,6 @@ const Navbar = () => {
         <li className="font-semibold text-lg dark:text-white"><NavLink to="/donationRequests"> Donation requests</NavLink></li>
         <li className="font-semibold text-lg dark:text-white"><NavLink to="/blog"> Blog</NavLink></li>
         <li className="font-semibold text-lg dark:text-white"><NavLink to="/dashboard">Dashboard</NavLink></li>
-        <li className="font-semibold text-lg dark:text-white"><NavLink to="/login">Login</NavLink></li>
     </>
     return (
         <div>
@@ -58,18 +60,27 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end gap-1">
-                    {/* <div className="hidden md:block dark:text-white ">
+                    <div className="hidden md:block dark:text-white ">
                         {
-                            user && <p>{user?.displayName.slice(0, 10)}</p>
+                            user && <p className="font-semibold">{user?.displayName}</p>
                         }
-                    </div> */}
+                    </div>
 
                     {
-                        user && <img className="w-10 h-10 md:w-14 md:h-14 mx-1 rounded-full" src={user?.photoURL} alt="" />
+                        user && <>
+
+                            <details className="dropdown dropdown-bottom dropdown-end">
+                                <summary className="flex "><img className="w-10 h-10 md:w-14 md:h-14 mx-1 rounded-full" src={user?.photoURL} alt="" /></summary>
+                                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                                    <Link to="/profile" className="flex justify-center items-center text-xl mt-3 btn"><CgProfile></CgProfile> Profile</Link>
+                                    <button onClick={handelButton} className="btn mt-8 bg-red-600 text-white"><TbLogout></TbLogout> LogOut</button>
+                                </ul>
+                            </details>
+                        </>
 
                     }
                     {
-                        user ? "" : <Link to="/login" className="btn">Login</Link>
+                        user ? "" : <Link to="/login" className="btn bg-red-600 text-white"><FiLogIn></FiLogIn> Login</Link>
                     }
                     {/* {
                         user ? <button onClick={handelButton} className="btn">LogOut</button> : <Link to="/login" className="btn">Login</Link>

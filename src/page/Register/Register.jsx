@@ -3,16 +3,15 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
 import imageUpload from '../../api/utils';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Register = () => {
     const [AllDivision, setDivision] = useState([])
     const [AllDistrict, setDistrict] = useState([])
     const [registerError, setRegisterError] = useState('');
     const { register, updateUserProfile } = useAuth()
-    const axiosPublic = useAxiosPublic()
-
+    const axiosSecure = useAxiosSecure();
     useEffect(() => {
         axios.get('devision.json')
             .then(res => {
@@ -36,36 +35,38 @@ const Register = () => {
         const district = form.district.value;
         const blood = form.blood.value;
         const photoURL = form.imgUrl.files[0];
-        const user = { name, email, password, confirmPassword, division, district, blood, photoURL }
 
 
         setRegisterError('')
-        // if (password.length < 6) {
-        //     return Swal.fire('Password must be at least 6 characters');
+        if (password.length < 6) {
+            return Swal.fire('Password must be at least 6 characters');
 
-        // } if (!/[A-Z]/.test(password)) {
-        //     return Swal.fire('Password must be a Uppercase letter');
+        } if (!/[A-Z]/.test(password)) {
+            return Swal.fire('Password must be a Uppercase letter');
 
-        // }
-        // if (!/[a-z]/.test(password)) {
-        //     return Swal.fire('Password must be a Lowercase letter');
+        }
+        if (!/[a-z]/.test(password)) {
+            return Swal.fire('Password must be a Lowercase letter');
 
-        // }
-        // if (!/[0-9]/.test(password)) {
-        //     return Swal.fire('Password must be a number ')
+        }
+        if (!/[0-9]/.test(password)) {
+            return Swal.fire('Password must be a number ')
 
-        // }
-        // if (!(password == confirmPassword)) {
-        //     return Swal.fire('password or confirmPassword not equal ')
-        // }
+        }
+        if (!(password == confirmPassword)) {
+            return Swal.fire('password or confirmPassword not equal ')
+        }
         try {
             const image = await imageUpload(photoURL)
             const result = await register(email, password);
             await updateUserProfile(name, image?.data?.display_url)
-            console.log(result.user);
             if (result?.user?.email) {
                 Swal.fire('register successful ')
             }
+            const user = { Name: name, Email: email, Division: division, District: district, Blood: blood, photoURL: image?.data?.display_url, Role: "donner" }
+            const res = await axiosSecure.post('/users', user)
+            console.log(res.data)
+
         } catch (error) {
             setRegisterError(error.message);
         }
