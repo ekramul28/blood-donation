@@ -1,12 +1,27 @@
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
+    // const { logInWithGoogle } = useContext(AuthContext);
+    const { logInWithGoogle } = useAuth();
     const handelForm = (e) => {
 
     }
     const googleClick = () => {
+        logInWithGoogle()
+            .then(result => {
 
+                if (result.user) {
+                    Swal.fire('Login Successful')
+
+                }
+
+            })
+            .catch(error => {
+                console.error(error)
+            })
     }
     return (
         <div className="hero min-h-screen bg-gray-600">
