@@ -1,21 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import useAllDivision from "../../hooks/useAllDivision";
+import useAllDistrict from "../../hooks/useAllDistrict";
 
 const SearchPage = () => {
-    const [AllDivision, setDivision] = useState([])
-    const [AllDistrict, setDistrict] = useState([])
-    useEffect(() => {
-        axios.get('devision.json')
-            .then(res => {
-                setDivision(res.data);
-            })
-    }, [])
-    useEffect(() => {
-        axios.get('distict.json')
-            .then(res => {
-                setDistrict(res.data);
-            })
-    }, [])
+    const AllDivision = useAllDivision();
+    const AllDistrict = useAllDistrict();
     return (
         <div className="lg:flex">
             <div className=" ">

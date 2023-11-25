@@ -6,6 +6,7 @@ import Register from "../page/Register/Register";
 import SearchPage from "../page/Search/SearchPage";
 import Dashboard from "../page/Dashboard/Dashboard";
 import Profile from "../page/Profile/Profile";
+import DonationRequest from "../page/DonationRequest/DonationRequest";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: 'search',
                 element: <SearchPage></SearchPage>
+            },
+            {
+                path: 'request',
+                element: <DonationRequest></DonationRequest>
             },
 
 

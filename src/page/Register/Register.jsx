@@ -1,29 +1,19 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
 import imageUpload from '../../api/utils';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAllDivision from '../../hooks/useAllDivision';
+import useAllDistrict from '../../hooks/useAllDistrict';
+import { useState } from 'react';
 
 const Register = () => {
-    const [AllDivision, setDivision] = useState([])
-    const [AllDistrict, setDistrict] = useState([])
     const [registerError, setRegisterError] = useState('');
     const { register, updateUserProfile } = useAuth()
     const axiosSecure = useAxiosSecure();
-    useEffect(() => {
-        axios.get('devision.json')
-            .then(res => {
-                setDivision(res.data);
-            })
-    }, [])
-    useEffect(() => {
-        axios.get('distict.json')
-            .then(res => {
-                setDistrict(res.data);
-            })
-    }, [])
+    const AllDivision = useAllDivision();
+    const AllDistrict = useAllDistrict();
+
     const handelForm = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -147,7 +137,7 @@ const Register = () => {
                                         </div>
                                         <div className="form-control">
                                             <label className="label">
-                                                <span className="label-text">imgUrl</span>
+                                                <span className="label-text">Blood Group</span>
                                             </label>
                                             <select name="blood" className="select select-bordered w-full  input ">
                                                 <option disabled selected>Select Your Blood Group</option>
