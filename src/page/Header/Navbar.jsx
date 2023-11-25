@@ -72,7 +72,7 @@ const Navbar = () => {
                             <details className="dropdown dropdown-bottom dropdown-end">
                                 <summary className="flex "><img className="w-10 h-10 md:w-14 md:h-14 mx-1 rounded-full" src={user?.photoURL} alt="" /></summary>
                                 <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                                    <Link to="/profile" className="flex justify-center items-center text-xl mt-3 btn"><CgProfile></CgProfile> Profile</Link>
+                                    <Link to="/dashboard/profile" className="flex justify-center items-center text-xl mt-3 btn"><CgProfile></CgProfile> Profile</Link>
                                     <button onClick={handelButton} className="btn mt-8 bg-red-600 text-white"><TbLogout></TbLogout> LogOut</button>
                                 </ul>
                             </details>

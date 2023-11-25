@@ -1,26 +1,26 @@
-import { Link } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
+import { FaHome } from "react-icons/fa";
 const Dashboard = () => {
     return (
-        <div className="bg-base-200">
-            <div className="drawer-open">
-                <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content flex flex-col items-center justify-center">
-                    {/* Page content here */}
-                    {/* <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label> */}
+        <div className="flex  ">
+            <div className="w-1/4">
+                <ul className="   lg:w-80  min-h-full bg-orange-300 p-2 md:p-6 text-white ">
 
-                </div>
-                <div className="drawer-side">
-                    {/* <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label> */}
-                    <ul className="menu p-4 lg:w-80 w-40 min-h-full bg-slate-700 text-white ">
-                        {/* Sidebar content here */}
-                        <Link to="/profile" className="flex justify-center items-center"><CgProfile></CgProfile> Profile</Link>
-                        <li><a>Sidebar Item 2</a></li>
-                    </ul>
+                    <NavLink to="/dashboard/profile" className="flex gap-4 md:text-xl font-bold  items-center"><CgProfile></CgProfile> Profile</NavLink>
+                    <NavLink to="/" className="flex gap-4 md:text-xl font-bold  items-center"><FaHome></FaHome> Home</NavLink>
 
-                </div>
+                </ul>
             </div>
+
+
+            <div className="w-3/4 min-h-screen">
+                {/* Page content here */}
+                <Outlet></Outlet>
+            </div>
+
         </div>
+
     );
 };
 

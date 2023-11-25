@@ -18,15 +18,18 @@ const Profile = () => {
         <div>
             {
                 user && <>
-                    <div className="bg-base-200">
-                        <div className="mb-80">
-                            <img className="w-full absolute h-[400px] bg-cover" src="https://i.ibb.co/gmV8DHG/blue-smooth-wall-textured-background.jpg" alt="" />
+                    <div className="">
+                        <div className="mb-44">
+                            <div className="absolute">
+                                <img className="w-[950px]  h-[300px] bg-cover" src="https://i.ibb.co/gmV8DHG/blue-smooth-wall-textured-background.jpg" alt="" />
+
+                            </div>
                             <div className="">
-                                <img className="rounded-full w-52 h-52 relative mx-auto top-72" src={data.photoURL} alt="" />
+                                <img className="rounded-full w-52 h-52 relative mx-auto top-48" src={data.photoURL} alt="" />
                             </div>
 
                         </div>
-                        <div className="my-8 text-center p-2">
+                        <div className="my-4 text-center p-2">
                             <h1 className="text-3xl font-bold text-center p-2 mt-6">Hi,{data.Name}</h1>
                             <h1 className="text-2xl font-bold text-center p-2 text-red-600 mt-6">{data.Role}</h1>
                             <p className="text-xl font-semibold p-2 flex justify-center items-center gap-3"><MdEmail></MdEmail> Email:{data?.Email}</p>

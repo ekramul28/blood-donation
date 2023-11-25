@@ -4,8 +4,8 @@ import Home from "../page/Home/Home";
 import Login from "../page/Login/Login";
 import Register from "../page/Register/Register";
 import SearchPage from "../page/Search/SearchPage";
-import Profile from "../page/Profile/Profile";
 import Dashboard from "../page/Dashboard/Dashboard";
+import Profile from "../page/Profile/Profile";
 
 const router = createBrowserRouter([
     {
@@ -17,27 +17,34 @@ const router = createBrowserRouter([
                 element: <Home></Home>
             },
             {
-                path: '/login',
+                path: 'login',
                 element: <Login></Login>
             },
             {
-                path: '/register',
+                path: 'register',
                 element: <Register></Register>
             },
             {
-                path: '/search',
+                path: 'search',
                 element: <SearchPage></SearchPage>
             },
-            {
-                path: '/profile',
-                element: <Profile></Profile>
-            },
-            {
-                path: '/dashboard',
-                element: <Dashboard></Dashboard>
-            },
-        ]
+
+
+        ],
+
     },
+    {
+        path: 'dashboard',
+        element: <Dashboard></Dashboard>,
+        children: [
+            {
+                path: 'profile',
+                element: <Profile></Profile>
+            }
+        ]
+
+    }
+
 ]);
 
 
