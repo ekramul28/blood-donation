@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
 import imageUpload from '../../api/utils';
@@ -13,6 +13,7 @@ const Register = () => {
     const axiosSecure = useAxiosSecure();
     const AllDivision = useAllDivision();
     const AllDistrict = useAllDistrict();
+    const navigate = useNavigate()
 
     const handelForm = async (e) => {
         e.preventDefault();
@@ -51,9 +52,11 @@ const Register = () => {
             const result = await register(email, password);
             await updateUserProfile(name, image?.data?.display_url)
             if (result?.user?.email) {
+                form.reset();
                 Swal.fire('register successful ')
+                navigate("/")
             }
-            const user = { Name: name, Email: email, Division: division, District: district, Blood: blood, photoURL: image?.data?.display_url, Role: "donner" }
+            const user = { Name: name, Email: email, Division: division, District: district, Blood: blood, photoURL: image?.data?.display_url, Role: "donner", Status: 'Active' }
             const res = await axiosSecure.post('/users', user)
             console.log(res.data)
 

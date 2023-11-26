@@ -4,9 +4,13 @@ import Home from "../page/Home/Home";
 import Login from "../page/Login/Login";
 import Register from "../page/Register/Register";
 import SearchPage from "../page/Search/SearchPage";
-import Dashboard from "../page/Dashboard/Dashboard";
-import Profile from "../page/Profile/Profile";
+import Dashboard from "../page/allDasbord/Dashboard/Dashboard";
 import DonationRequest from "../page/DonationRequest/DonationRequest";
+import DashboardHome from "../page/allDasbord/DashnoardHome/DashboardHome";
+import Profile from "../page/allDasbord/Profile/Profile";
+import MyDonationRequests from "../page/allDasbord/my-donation-requests/donationRequests";
+import User from "../page/allDasbord/User/User";
+import AdminHome from "../page/allDasbord/AdminHome/AdminHome";
 
 const router = createBrowserRouter([
     {
@@ -43,9 +47,30 @@ const router = createBrowserRouter([
         element: <Dashboard></Dashboard>,
         children: [
             {
+                path: 'dashboards',
+                element: <DashboardHome></DashboardHome>
+            },
+            {
                 path: 'profile',
                 element: <Profile></Profile>
-            }
+            },
+            {
+                path: 'myDonationRequests',
+                element: <MyDonationRequests></MyDonationRequests>
+            },
+            {
+                path: 'donationRequest',
+                element: <DonationRequest></DonationRequest>
+            },
+            // admin
+            {
+                path: 'users',
+                element: <User></User>
+            },
+            {
+                path: 'home',
+                element: <AdminHome></AdminHome>
+            },
         ]
 
     }

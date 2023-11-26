@@ -1,12 +1,21 @@
+import Swal from "sweetalert2";
 import useAllDistrict from "../../hooks/useAllDistrict";
 import useAllDivision from "../../hooks/useAllDivision";
 import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useNavigate } from "react-router-dom";
 
 const DonationRequest = () => {
+
     const AllDivision = useAllDivision();
     const AllDistrict = useAllDistrict();
+
+
+    const axiosPublic = useAxiosPublic();
     const { user } = useAuth();
-    const handelForm = (e) => {
+    const navigate = useNavigate()
+
+    const handelForm = async (e) => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
@@ -20,7 +29,19 @@ const DonationRequest = () => {
         const donationDate = form.donationDate.value;
         const donationTime = form.donationTime.value;
         const value = { name, email, recipientName, hospitalName, message, division, district, blood, donationDate, donationTime, status: "pending" }
-        console.log(value)
+        console.log(value);
+        try {
+            const data = await axiosPublic.post('/request', value)
+
+            if (data?.data?.insertedId) {
+                form.reset();
+                Swal.fire('request successful ')
+                navigate("/")
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
     }
     return (
         <div>
@@ -126,7 +147,7 @@ const DonationRequest = () => {
                                         <label className="label">
                                             <span className="label-text">Donation time</span>
                                         </label>
-                                        <input type="time" defaultValue={'12'} name="donationTime" className="file-input  input-bordered" required />
+                                        <input type="time" name="donationTime" className="file-input  input-bordered" required />
                                     </div>
 
 

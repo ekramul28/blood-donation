@@ -10,6 +10,7 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const provider = new GoogleAuthProvider();
     const logInWithGoogle = () => {
+        setLoading(true);
         return signInWithPopup(auth, provider);
     }
     const register = (email, password, user) => {
@@ -18,6 +19,7 @@ const AuthProvider = ({ children }) => {
 
     }
     const updateUserProfile = (name, photo) => {
+        setLoading(true);
         return updateProfile(auth.currentUser, {
             displayName: name,
             photoURL: photo

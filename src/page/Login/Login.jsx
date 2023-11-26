@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
@@ -8,6 +8,7 @@ const Login = () => {
 
     const { logInWithGoogle, login } = useAuth();
     const [error, setError] = useState('');
+    const navigate = useNavigate();
     const handelForm = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -19,8 +20,10 @@ const Login = () => {
             .then((result) => {
 
                 if (result.user) {
-                    Swal.fire('Login Successful');
                     form.reset();
+                    Swal.fire('Login Successful');
+
+                    navigate("/")
                 }
             })
             .catch((error) => {
@@ -33,6 +36,7 @@ const Login = () => {
 
                 if (result.user) {
                     Swal.fire('Login Successful')
+                    navigate('/')
 
                 }
 
@@ -76,9 +80,9 @@ const Login = () => {
                     </form>
 
                 </div>
-                <div onClick={googleClick} className=" border-2 border-white p-4 rounded-xl mt-5">
+                {/* <div onClick={googleClick} className=" border-2 border-white p-4 rounded-xl mt-5">
                     <p className="flex justify-center items-center gap-3 text-xl font-semibold text-white"><FcGoogle /> Continue With Google</p>
-                </div>
+                </div> */}
             </div>
         </div>
     );

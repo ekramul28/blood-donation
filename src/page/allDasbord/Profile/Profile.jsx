@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useAuth from "../../hooks/useAuth";
 import { MdBloodtype } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 const Profile = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();

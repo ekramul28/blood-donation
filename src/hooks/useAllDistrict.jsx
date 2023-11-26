@@ -1,16 +1,19 @@
-import { useState } from "react";
 import useAxiosPublic from "./useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const useAllDistrict = () => {
     const axiosPublic = useAxiosPublic();
-    const [AllDistrict, setDistrict] = useState([]);
-    axiosPublic.get('/district')
-        .then(res => {
-            setDistrict(res.data)
-        })
+    const { data: AllDistrict = [] } = useQuery({
+        queryKey: ['cart'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/district');
+            return res.data;
+        }
+    })
+
+    return AllDistrict
 
 
-    return AllDistrict;
 };
 
 export default useAllDistrict;
