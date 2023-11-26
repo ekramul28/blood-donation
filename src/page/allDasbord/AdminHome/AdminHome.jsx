@@ -1,8 +1,10 @@
+import Welcome from "../../../shared/Welcome/Welcome";
 
 const AdminHome = () => {
     return (
-        <div className="flex justify-center items-center mt-5">
-            <div className="stats shadow">
+        <div className="">
+            <Welcome></Welcome>
+            <div className="stats shadow flex justify-center items-center mt-5">
 
                 <div className="stat place-items-center">
                     <div className="stat-title">Downloads</div>

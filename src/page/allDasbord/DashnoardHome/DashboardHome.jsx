@@ -1,10 +1,34 @@
-import useAuth from "../../../hooks/useAuth";
+import useAllRequest from "../../../hooks/useAllRequest";
+import Welcome from "../../../shared/Welcome/Welcome";
 
 const DashboardHome = () => {
-    const { user } = useAuth();
+    const [requestData] = useAllRequest();
     return (
         <div>
-            <h1 className="text-3xl font-bold text-center my-5">Hi,{user?.displayName} Welcome</h1>
+            <Welcome></Welcome>
+            <div className="overflow-x-auto">
+                <table className="table">
+                    {/* head */}
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Job</th>
+                            <th>Favorite Color</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* row 1 */}
+                        <tr>
+                            <th>1</th>
+                            <td>Cy Ganderton</td>
+                            <td>Quality Control Specialist</td>
+                            <td>Blue</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

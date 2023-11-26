@@ -147,7 +147,7 @@ const DonationRequest = () => {
                                         <label className="label">
                                             <span className="label-text">Donation time</span>
                                         </label>
-                                        <input type="time" name="donationTime" className="file-input  input-bordered" required />
+                                        <input type="text" name="donationTime" className="file-input  input-bordered" required />
                                     </div>
 
 

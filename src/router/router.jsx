@@ -11,6 +11,7 @@ import Profile from "../page/allDasbord/Profile/Profile";
 import MyDonationRequests from "../page/allDasbord/my-donation-requests/donationRequests";
 import User from "../page/allDasbord/User/User";
 import AdminHome from "../page/allDasbord/AdminHome/AdminHome";
+import PendingDonationRequest from "../page/pendingDonationRequest/pendingDonationRequest";
 
 const router = createBrowserRouter([
     {
@@ -34,8 +35,8 @@ const router = createBrowserRouter([
                 element: <SearchPage></SearchPage>
             },
             {
-                path: 'request',
-                element: <DonationRequest></DonationRequest>
+                path: 'pendingRequest',
+                element: <PendingDonationRequest></PendingDonationRequest>
             },
 
 
