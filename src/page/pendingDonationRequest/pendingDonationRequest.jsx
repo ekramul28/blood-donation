@@ -6,7 +6,7 @@ const PendingDonationRequest = () => {
 
     const axiosSecure = useAxiosSecure();
     const { data: pendingData = [] } = useQuery({
-        queryKey: ["data"],
+        queryKey: ["pendingData"],
         queryFn: async () => {
             const res = await axiosSecure('/pending')
             return res.data;
@@ -26,6 +26,7 @@ const PendingDonationRequest = () => {
                         <th>District </th>
                         <th>DonationDate </th>
                         <th>donationTime </th>
+                        <th>Status</th>
                         <th>Details </th>
                     </tr>
                 </thead>
@@ -33,11 +34,12 @@ const PendingDonationRequest = () => {
                     {
                         pendingData.map((pending, index) => <tr key={pending._id} className="bg-base-200">
                             <th>{index + 1}</th>
-                            <td>{pending.name}</td>
-                            <td>{pending.division}</td>
-                            <td>{pending.district}</td>
-                            <td>{pending.donationDate}</td>
-                            <td>{pending.donationTime}</td>
+                            <td>{pending?.name}</td>
+                            <td>{pending?.division}</td>
+                            <td>{pending?.district}</td>
+                            <td>{pending?.donationDate}</td>
+                            <td>{pending?.donationTime}</td>
+                            <td>{pending?.status}</td>
                             <Link to={`/details/${pending._id}`}>
                                 <button className="btn mt-1 bg-green-500 text-white">Details</button>
                             </Link>

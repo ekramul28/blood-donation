@@ -6,10 +6,10 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
 
 const DonationRequest = () => {
-
     const AllDivision = useAllDivision();
-    const AllDistrict = useAllDistrict();
-
+    const District = useAllDistrict();
+    console.log(AllDivision)
+    console.log(District)
 
     const axiosPublic = useAxiosPublic();
     const { user } = useAuth();
@@ -43,6 +43,8 @@ const DonationRequest = () => {
             console.log(error)
         }
     }
+
+
     return (
         <div>
             <div className="hero min-h-screen bg-base-100 ">
@@ -103,7 +105,7 @@ const DonationRequest = () => {
                                         <select name="division" className="select select-bordered w-full  input ">
                                             <option disabled selected required>Select Your Division</option>
                                             {
-                                                AllDivision.map(division => <option key={division.id}>{division.name}</option>)
+                                                AllDivision?.map(division => <option key={division.id}>{division.name}</option>)
                                             }
 
                                         </select>
@@ -115,7 +117,7 @@ const DonationRequest = () => {
                                         <select name="district" className="select select-bordered w-full  input ">
                                             <option disabled selected required>Select Your District</option>
                                             {
-                                                AllDistrict.map(district => <option key={district.id}>{district.name}</option>)
+                                                District?.map(district => <option key={district.id}>{district.name}</option>)
                                             }
 
                                         </select>

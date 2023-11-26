@@ -1,34 +1,77 @@
-import useAllRequest from "../../../hooks/useAllRequest";
+import Swal from "sweetalert2";
+import UseMyDonationRequests from "../../../hooks/UseMyDonationRequests";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Welcome from "../../../shared/Welcome/Welcome";
 
 const DashboardHome = () => {
-    const [requestData] = useAllRequest();
+    const [donner, refetch] = UseMyDonationRequests();
+    const data = donner.slice(0, 3)
+    const handelConform = async (id) => {
+        const res = await useAxiosSecure.patch(`/request/${id}`);
+        console.log(res.data)
+        if (res.data.modifiedCount > 0) {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Done",
+                showConfirmButton: false,
+                timer: 1500
+
+            });
+            refetch()
+        }
+
+    }
     return (
         <div>
             <Welcome></Welcome>
-            <div className="overflow-x-auto">
-                <table className="table">
-                    {/* head */}
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* row 1 */}
-                        <tr>
-                            <th>1</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                        </tr>
+            {
+                (data.length > 0) ? <>
+                    <div className="overflow-x-auto">
+                        <table className="table">
+                            {/* head */}
+                            <thead>
+                                <tr className="bg-red-500 text-white">
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Division</th>
+                                    <th>District </th>
+                                    <th>DonationDate </th>
+                                    <th>donationTime </th>
+                                    <th>Status</th>
+                                    <th>Done</th>
 
-                    </tbody>
-                </table>
-            </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    data.map((pending, index) => <tr key={pending._id} className="bg-base-200">
+                                        <th>{index + 1}</th>
+                                        <td>{pending?.name}</td>
+                                        <td>{pending?.division}</td>
+                                        <td>{pending?.district}</td>
+                                        <td>{pending?.donationDate}</td>
+                                        <td>{pending?.donationTime}</td>
+                                        <td>{pending?.status}</td>
+                                        {
+                                            (pending?.status === "inprogress") ? <>
+                                                <td className="">
+                                                    <button onClick={() => handelConform(pending._id)} className="btn text-white bg-green-500">Done</button>
+                                                    <button className="btn text-white bg-red-500">Cancel</button>
+                                                </td>
+                                            </> : ""
+                                        }
+
+                                    </tr>)
+                                }
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </> : ""
+            }
         </div>
     );
 };

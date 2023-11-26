@@ -1,25 +1,56 @@
-import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const DetailsPage = () => {
-    const donner = useLoaderData();
+    const { id } = useParams();
+    const axiosSecure = useAxiosSecure()
+    const { refetch, data: details = [] } = useQuery({
+        queryKey: ['details', id],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/request/man/${id}`);
+            return res.data;
+        }
+    })
+    console.log(details)
+    const handelConform = async () => {
+        const res = await axiosSecure.patch(`/request/${id}`);
+        console.log(res.data)
+        if (res.data.modifiedCount > 0) {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Done",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            refetch()
+        }
+
+    }
     return (
         <div className="">
             <div className="card w-full">
                 <div className="card-body text-center">
                     <h1 className="text-3xl my-4 font-bold">All Details Hear</h1>
-                    <p className="text-3xl font-bold"><span className="text-red-500">Recipient Name:</span>{donner?.recipientName}</p>
-                    <p className="text-2xl font-bold"><span className="text-red-500">Email:</span>{donner?.email}</p>
-                    <p className="text-2xl font-bold"><span className="text-red-500">Hospital Name :</span>{donner?.hospitalName}</p>
-                    <p className="text-xl font-bold"><span className="text-red-500">Message:</span>{donner?.message}</p>
+                    <p className="text-3xl font-bold"><span className="text-red-500">Recipient Name:</span>{details?.recipientName}</p>
+                    <p className="text-2xl font-bold"><span className="text-red-500">Email:</span>{details?.email}</p>
+                    <p className="text-2xl font-bold"><span className="text-red-500">Hospital Name :</span>{details?.hospitalName}</p>
+                    <p className="text-xl font-bold"><span className="text-red-500">Message:</span>{details?.message}</p>
 
-                    <p className="text-xl font-bold"><span className="text-red-500">Donation Date:</span>{donner?.donationDate}</p>
-                    <p className="text-xl font-bold"><span className="text-red-500">Donation Time:</span>{donner?.donationTime}</p>
-                    <p className="text-xl font-bold"><span className="text-red-500">Status:</span>{donner?.status}</p>
-                    <p className="text-xl font-bold"><span className="text-red-500">Blood:</span>{donner?.blood}</p>
-                    <p className="text-xl font-bold"><span className="text-red-500">District:</span>{donner?.district}</p>
-                    <p className="text-xl font-bold"><span className="text-red-500">division:</span>{donner?.division}</p>
+                    <p className="text-xl font-bold"><span className="text-red-500">Donation Date:</span>{details?.donationDate}</p>
+                    <p className="text-xl font-bold"><span className="text-red-500">Donation Time:</span>{details?.donationTime}</p>
+                    <p className="text-xl font-bold"><span className="text-red-500">Status:</span>{details?.status}</p>
+                    <p className="text-xl font-bold"><span className="text-red-500">Blood:</span>{details?.blood}</p>
+                    <p className="text-xl font-bold"><span className="text-red-500">District:</span>{details?.district}</p>
+                    <p className="text-xl font-bold"><span className="text-red-500">division:</span>{details?.division}</p>
                     <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Buy Now</button>
+                        {
+                            (details?.status === "pending") ? <button onClick={handelConform} className="btn btn-primary">Conform</button> : <button disabled className="btn btn-primary">Conform</button>
+
+
+                        }
                     </div>
                 </div>
             </div>

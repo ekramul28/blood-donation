@@ -133,7 +133,7 @@ const Register = () => {
                                             <select name="district" className="select select-bordered w-full  input ">
                                                 <option disabled selected required>Select Your District</option>
                                                 {
-                                                    AllDistrict.map(district => <option key={district.id}>{district.name}</option>)
+                                                    AllDistrict.map(district => <option key={district.id}>{district?.name}</option>)
                                                 }
 
                                             </select>
