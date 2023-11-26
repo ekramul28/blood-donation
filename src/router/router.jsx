@@ -12,6 +12,7 @@ import MyDonationRequests from "../page/allDasbord/my-donation-requests/donation
 import User from "../page/allDasbord/User/User";
 import AdminHome from "../page/allDasbord/AdminHome/AdminHome";
 import PendingDonationRequest from "../page/pendingDonationRequest/pendingDonationRequest";
+import DetailsPage from "../page/pendingDonationRequest/DetailsPage";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,11 @@ const router = createBrowserRouter([
             {
                 path: 'pendingRequest',
                 element: <PendingDonationRequest></PendingDonationRequest>
+            },
+            {
+                path: 'details/:id',
+                element: <DetailsPage></DetailsPage>,
+                loader: ({ params }) => fetch(`http://localhost:5000/request/${params.id}`)
             },
 
 

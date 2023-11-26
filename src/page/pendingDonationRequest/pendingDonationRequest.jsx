@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const PendingDonationRequest = () => {
+
     const axiosSecure = useAxiosSecure();
     const { data: pendingData = [] } = useQuery({
         queryKey: ["data"],
@@ -9,7 +11,9 @@ const PendingDonationRequest = () => {
             const res = await axiosSecure('/pending')
             return res.data;
         }
+
     });
+
     return (
         <div className="overflow-x-auto">
             <table className="table">
@@ -34,7 +38,9 @@ const PendingDonationRequest = () => {
                             <td>{pending.district}</td>
                             <td>{pending.donationDate}</td>
                             <td>{pending.donationTime}</td>
-                            <button className="btn mt-1 bg-green-500 text-white">Details</button>
+                            <Link to={`/details/${pending._id}`}>
+                                <button className="btn mt-1 bg-green-500 text-white">Details</button>
+                            </Link>
                         </tr>)
                     }
 
