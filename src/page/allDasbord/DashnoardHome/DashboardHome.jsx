@@ -2,12 +2,14 @@ import Swal from "sweetalert2";
 import UseMyDonationRequests from "../../../hooks/UseMyDonationRequests";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Welcome from "../../../shared/Welcome/Welcome";
+import { Link } from "react-router-dom";
 
 const DashboardHome = () => {
     const [donner, refetch] = UseMyDonationRequests();
     const data = donner.slice(0, 3)
-    const handelConform = async (id) => {
-        const res = await useAxiosSecure.patch(`/request/${id}`);
+    const axiosSecure = useAxiosSecure();
+    const handelDone = async (id) => {
+        const res = await axiosSecure.patch(`/request/done/${id}`);
         console.log(res.data)
         if (res.data.modifiedCount > 0) {
             Swal.fire({
@@ -21,6 +23,21 @@ const DashboardHome = () => {
             refetch()
         }
 
+    }
+    const handelCancel = async (id) => {
+        const res = await axiosSecure.patch(`/request/cancel/${id}`);
+        console.log(res.data)
+        if (res.data.modifiedCount > 0) {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Done",
+                showConfirmButton: false,
+                timer: 1500
+
+            });
+            refetch()
+        }
     }
     return (
         <div>
@@ -56,8 +73,8 @@ const DashboardHome = () => {
                                         {
                                             (pending?.status === "inprogress") ? <>
                                                 <td className="">
-                                                    <button onClick={() => handelConform(pending._id)} className="btn text-white bg-green-500">Done</button>
-                                                    <button className="btn text-white bg-red-500">Cancel</button>
+                                                    <button onClick={() => handelDone(pending._id)} className="btn text-white bg-green-500">Done</button>
+                                                    <button onClick={() => handelCancel(pending._id)} className="btn text-white bg-red-500">Cancel</button>
                                                 </td>
                                             </> : ""
                                         }
@@ -69,6 +86,13 @@ const DashboardHome = () => {
 
                             </tbody>
                         </table>
+                        <div className="flex justify-center items-center mt-4">
+                            <Link to="/dashboard/myDonationRequests">
+                                <button className="btn bg-red-500 text-white ">See All</button>
+
+                            </Link>
+                        </div>
+
                     </div>
                 </> : ""
             }

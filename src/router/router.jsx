@@ -13,6 +13,7 @@ import User from "../page/allDasbord/User/User";
 import AdminHome from "../page/allDasbord/AdminHome/AdminHome";
 import PendingDonationRequest from "../page/pendingDonationRequest/pendingDonationRequest";
 import DetailsPage from "../page/pendingDonationRequest/DetailsPage";
+import UpdatePage from "../page/allDasbord/UpdatePage/UpdatePage";
 
 const router = createBrowserRouter([
     {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
             {
                 path: 'donationRequest',
                 element: <DonationRequest></DonationRequest>
+            },
+            {
+                path: 'update/:id',
+                element: <UpdatePage></UpdatePage>
             },
             // admin
             {

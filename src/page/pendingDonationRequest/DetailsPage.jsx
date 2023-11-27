@@ -2,18 +2,13 @@ import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import useAllDetails from "../../hooks/useAllDetails";
 
 const DetailsPage = () => {
     const { id } = useParams();
     const axiosSecure = useAxiosSecure()
-    const { refetch, data: details = [] } = useQuery({
-        queryKey: ['details', id],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/request/man/${id}`);
-            return res.data;
-        }
-    })
-    console.log(details)
+
+    const [refetch, details] = useAllDetails()
     const handelConform = async () => {
         const res = await axiosSecure.patch(`/request/${id}`);
         console.log(res.data)
