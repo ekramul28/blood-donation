@@ -3,15 +3,36 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { GoDotFill } from "react-icons/go";
 const User = () => {
     const axiosSecure = useAxiosSecure();
-    const { data: users = [] } = useQuery({
+    const { data: users = [], refetch } = useQuery({
         queryKey: ['data'],
         queryFn: async () => {
             const res = await axiosSecure.get('/users')
             return res.data;
         }
     })
-    const handelBlock = (id) => {
-
+    const handelBlock = async (id) => {
+        const res = await axiosSecure.patch(`/block/${id}`);
+        if (res.data.modifiedCount > 0) {
+            refetch()
+        }
+    }
+    const handelActive = async (id) => {
+        const res = await axiosSecure.patch(`/active/${id}`);
+        if (res.data.modifiedCount > 0) {
+            refetch()
+        }
+    }
+    const handelMakeVolunteer = async (id) => {
+        const res = await axiosSecure.patch(`/volunteer/user/${id}`);
+        if (res.data.modifiedCount > 0) {
+            refetch()
+        }
+    }
+    const handelMakeAdmin = async (id) => {
+        const res = await axiosSecure.patch(`/admin/man/${id}`);
+        if (res.data.modifiedCount > 0) {
+            refetch()
+        }
     }
     return (
         <div>
@@ -62,17 +83,17 @@ const User = () => {
                                 </td>
                                 <td className="flex gap-1">
                                     {
-                                        (allUser?.Status === 'Active') ? <button onClick={() => handelBlock(allUser._id)} className="btn bg-red-600 text-white">Block</button> : <button className="btn bg-green-600 text-white">Active</button>
+                                        (allUser?.Status === 'Active') ? <button onClick={() => handelBlock(allUser._id)} className="btn bg-red-600 text-white">Block</button> : <button onClick={() => handelActive(allUser._id)} className="btn bg-green-600 text-white">Active</button>
                                     }
 
                                 </td>
                                 <td>  {
-                                    (allUser.Status === 'Volunteer') ? "Volunteer" : <button className="btn ">Make Volunteer</button>
+                                    (allUser?.Role === 'volunteer') ? "Volunteer" : <button onClick={() => handelMakeVolunteer(allUser._id)} className="btn ">Make Volunteer</button>
 
                                 }</td>
                                 <th>
                                     {
-                                        (allUser.Status === 'Admin') ? "Admin" : <button className="btn ">Make Admin</button>
+                                        (allUser?.Role === 'admin') ? "Admin" : <button onClick={() => handelMakeAdmin(allUser._id)} className="btn ">Make Admin</button>
 
                                     }
                                 </th>

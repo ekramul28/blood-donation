@@ -14,6 +14,7 @@ import AdminHome from "../page/allDasbord/AdminHome/AdminHome";
 import PendingDonationRequest from "../page/pendingDonationRequest/pendingDonationRequest";
 import DetailsPage from "../page/pendingDonationRequest/DetailsPage";
 import UpdatePage from "../page/allDasbord/UpdatePage/UpdatePage";
+import AllRequest from "../page/allDasbord/AllRequest/AllRequest";
 
 const router = createBrowserRouter([
     {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
             {
                 path: 'home',
                 element: <AdminHome></AdminHome>
+            },
+            {
+                path: 'allRequest',
+                element: <AllRequest></AllRequest>
             },
         ]
 

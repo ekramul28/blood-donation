@@ -10,9 +10,10 @@ const Dashboard = () => {
 
                     <NavLink to="dashboards" className="flex my-4 md:text-xl font-bold gap-2  items-center"><FaHome></FaHome> DashboardHome</NavLink>
                     <NavLink to="/dashboard/profile" className="flex my-4 md:text-xl font-bold gap-2 items-center"><CgProfile></CgProfile> Profile</NavLink>
-                    <NavLink to="/dashboard/myDonationRequests" className="flex my-4 md:text-xl font-bold gap-2 items-center"><MdBloodtype></MdBloodtype> MyDonationRequests</NavLink>
+                    <NavLink to="/dashboard/myDonationRequests" className="flex my-4 md:text-xl font-bold gap-2 items-center"><MdBloodtype></MdBloodtype> My Donation Requests</NavLink>
                     <NavLink to="/dashboard/donationRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><MdBloodtype></MdBloodtype> Donation-request</NavLink>
-                    <NavLink to="/dashboard/users" className="flex my-4 md:text-xl font-bold gap-2 items-center"><CgProfile></CgProfile> AllUser</NavLink>
+                    <NavLink to="/dashboard/users" className="flex my-4 md:text-xl font-bold gap-2 items-center"><CgProfile></CgProfile> All User</NavLink>
+                    <NavLink to="/dashboard/allRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><CgProfile></CgProfile> all Request</NavLink>
                     <NavLink to="/dashboard/home" className="flex my-4 md:text-xl font-bold gap-2 items-center"><FaHome></FaHome> Home</NavLink>
                     <NavLink to="/" className="flex my-4 md:text-xl font-bold gap-2 items-center"><FaHome></FaHome> Home</NavLink>
 
