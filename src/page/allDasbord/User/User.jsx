@@ -10,6 +10,9 @@ const User = () => {
             return res.data;
         }
     })
+    const handelBlock = (id) => {
+
+    }
     return (
         <div>
             <div className="overflow-x-auto">
@@ -59,7 +62,7 @@ const User = () => {
                                 </td>
                                 <td className="flex gap-1">
                                     {
-                                        (allUser?.Status === 'Active') ? <button className="btn bg-red-600 text-white">Block</button> : <button className="btn bg-green-600 text-white">Active</button>
+                                        (allUser?.Status === 'Active') ? <button onClick={() => handelBlock(allUser._id)} className="btn bg-red-600 text-white">Block</button> : <button className="btn bg-green-600 text-white">Active</button>
                                     }
 
                                 </td>

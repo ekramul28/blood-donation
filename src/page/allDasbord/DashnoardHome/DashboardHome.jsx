@@ -112,7 +112,7 @@ const DashboardHome = () => {
                                                 (pending?.status === "inprogress") ? <>
 
                                                     <div className=" flex"><button onClick={() => handelDone(pending._id)} className="btn text-white bg-green-500">Done</button>
-                                                        <button onClick={() => handelCancel(pending._id)} className="btn text-white bg-red-500">Cancel</button></div>
+                                                        <button onClick={() => handelCancel(pending._id)} className="btn text-white bg-red-500">cancel</button></div>
 
                                                 </> : <div className="flex justify-center items-center top-4"> <h1>NotInprogress</h1></div>
                                             }

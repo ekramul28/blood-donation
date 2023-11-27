@@ -8,7 +8,7 @@ const PendingDonationRequest = () => {
     const { data: pendingData = [] } = useQuery({
         queryKey: ["pendingData"],
         queryFn: async () => {
-            const res = await axiosSecure('/pending')
+            const res = await axiosSecure(`/pending`)
             return res.data;
         }
 

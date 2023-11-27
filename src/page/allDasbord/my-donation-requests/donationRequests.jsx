@@ -4,10 +4,13 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
+import useAuth from "../../../hooks/useAuth";
+import { useState } from "react";
 const MyDonationRequests = () => {
-
+    const { user } = useAuth();
     const [donner, refetch] = UseMyDonationRequests()
-    console.log(donner)
+    const [filterData, setFilterData] = useState(donner);
+    // console.log(donner)
     const axiosSecure = useAxiosSecure();
     const handelDone = async (id) => {
         const res = await axiosSecure.patch(`/request/done/${id}`);
@@ -65,21 +68,36 @@ const MyDonationRequests = () => {
             refetch()
         }
     }
+    const handelForm = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const status = form.status.value;
+        console.log(status);
+
+        const res = await axiosSecure(`/pending/all?status=${status}&user=${user?.email}`)
+        setFilterData(res.data);
+        console.log(res.data)
+
+
+
+    }
     return (
         <div className="overflow-x-auto mt-6">
             <div><h1 className="text-3xl text-center mb-4 font-bold"> Filter Your  Data</h1></div>
-            <div className="flex">
-                <select className="select text-xl font-bold select-bordered  w-3/4  ">
-                    <option className="text-3xl p-4" disabled selected>Select Your Status</option>
-                    <option className="text-3xl" >pending</option>
-                    <option className="text-3xl" >inprogress</option>
-                    <option className="text-3xl" >done</option>
-                    <option className="text-3xl" >canceled</option>
 
+            <form onSubmit={handelForm}>
+                <div className="flex">
+                    <select name="status" required className="select text-xl font-bold select-bordered w-3/4">
+                        <option value="" disabled selected>Select Your Status</option>
+                        <option value="pending" className="text-3xl">Pending</option>
+                        <option value="inprogress" className="text-3xl">InProgress</option>
+                        <option value="done" className="text-3xl">Done</option>
+                        <option value="canceled" className="text-3xl">Canceled</option>
+                    </select>
+                    <input className="w-1/4 text-white bg-green-500 btn" type="submit" value="Filter" />
+                </div>
+            </form>
 
-                </select>
-                <input className="w-1/4 text-white bg-green-500 btn" type="submit" value="Filter" />
-            </div>
             <table className="table">
                 {/* head */}
                 <thead>
@@ -99,7 +117,7 @@ const MyDonationRequests = () => {
                 </thead>
                 <tbody>
                     {
-                        donner?.map((pending, index) => <tr key={pending._id} className="bg-base-200">
+                        filterData?.map((pending, index) => <tr key={pending._id} className="bg-base-200">
                             <th>{index + 1}</th>
                             <td>{pending?.name}</td>
                             <td>{pending?.division}</td>
@@ -121,7 +139,7 @@ const MyDonationRequests = () => {
                                     <td className="">
                                         <div className="flex ">
                                             <button onClick={() => handelDone(pending._id)} className="btn text-white bg-green-500">Done</button>
-                                            <button onClick={() => handelCancel(pending._id)} className="btn text-white bg-red-500">Cancel</button>
+                                            <button onClick={() => handelCancel(pending._id)} className="btn text-white bg-red-500">canceled</button>
                                         </div>
                                     </td>
                                 </> : <div className="flex justify-center items-center top-4"> <h1>NotInprogress</h1></div>

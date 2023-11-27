@@ -36,7 +36,7 @@ const DonationRequest = () => {
             if (data?.data?.insertedId) {
                 form.reset();
                 Swal.fire('request successful ')
-                navigate("/")
+                navigate("/myDonationRequests")
             }
 
         } catch (error) {
