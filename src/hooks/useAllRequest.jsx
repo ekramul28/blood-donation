@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 const useAllRequest = () => {
     const axiosPublic = useAxiosPublic()
     const { refetch, data: requestData = [] } = useQuery({
-        queryKey: ["users"],
+        queryKey: ["requestData"],
         queryFn: async () => {
             const res = await axiosPublic.get('/request');
             return res.data;

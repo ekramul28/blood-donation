@@ -76,7 +76,7 @@ const AllRequest = () => {
         const status = form.status.value;
         console.log(status);
 
-        const res = await axiosSecure(`/pending/all?status=${status}&user=${user?.email}`)
+        const res = await axiosSecure(`/pending/all?status=${status}`)
         setFilterData(res.data);
         console.log(res.data)
 

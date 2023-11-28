@@ -15,6 +15,7 @@ import PendingDonationRequest from "../page/pendingDonationRequest/pendingDonati
 import DetailsPage from "../page/pendingDonationRequest/DetailsPage";
 import UpdatePage from "../page/allDasbord/UpdatePage/UpdatePage";
 import AllRequest from "../page/allDasbord/AllRequest/AllRequest";
+import VolunteerHome from "../page/VolunteerHome/VolunteerHome";
 
 const router = createBrowserRouter([
     {
@@ -73,6 +74,11 @@ const router = createBrowserRouter([
             {
                 path: 'update/:id',
                 element: <UpdatePage></UpdatePage>
+            },
+            // Volunteer
+            {
+                path: 'volunteerHome',
+                element: <VolunteerHome></VolunteerHome>
             },
             // admin
             {
