@@ -19,11 +19,13 @@ import VolunteerHome from "../page/VolunteerHome/VolunteerHome";
 import VolunteerAllRequest from "../page/VolunteerAllRequest/VolunteerAllRequest";
 import PrivateRoute from "./privateRout";
 import AdminRout from "./AdminRout";
+import NoPage from "../page/Nopage/NoPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root></Root>,
+        errorElement: <NoPage></NoPage>,
         children: [
             {
                 path: '/',
@@ -57,6 +59,7 @@ const router = createBrowserRouter([
     {
         path: 'dashboard',
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        errorElement: <NoPage></NoPage>,
         children: [
             {
                 path: 'dashboards',
