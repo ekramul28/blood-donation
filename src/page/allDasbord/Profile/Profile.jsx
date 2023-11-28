@@ -1,19 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import { MdBloodtype } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import useUser from "../../../hooks/useUser";
 const Profile = () => {
-    const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
-    const { data = [] } = useQuery({
-        queryKey: ['data', user?.email],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/user/${user?.email}`);
-            return res.data;
-        }
-    })
+
+    const [data] = useUser();
     return (
         <div>
             {

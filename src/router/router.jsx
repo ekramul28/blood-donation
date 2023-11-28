@@ -16,6 +16,8 @@ import DetailsPage from "../page/pendingDonationRequest/DetailsPage";
 import UpdatePage from "../page/allDasbord/UpdatePage/UpdatePage";
 import AllRequest from "../page/allDasbord/AllRequest/AllRequest";
 import VolunteerHome from "../page/VolunteerHome/VolunteerHome";
+import VolunteerAllRequest from "../page/VolunteerAllRequest/VolunteerAllRequest";
+import PrivateRoute from "./privateRout";
 
 const router = createBrowserRouter([
     {
@@ -44,7 +46,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'details/:id',
-                element: <DetailsPage></DetailsPage>,
+                element: <PrivateRoute><DetailsPage></DetailsPage></PrivateRoute>,
             },
 
 
@@ -53,7 +55,7 @@ const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
             {
                 path: 'dashboards',
@@ -79,6 +81,10 @@ const router = createBrowserRouter([
             {
                 path: 'volunteerHome',
                 element: <VolunteerHome></VolunteerHome>
+            },
+            {
+                path: 'volunteerAllRequest',
+                element: <VolunteerAllRequest></VolunteerAllRequest>
             },
             // admin
             {

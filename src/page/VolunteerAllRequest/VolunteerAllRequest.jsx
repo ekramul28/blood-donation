@@ -1,73 +1,15 @@
-import { Link } from "react-router-dom";
-import useAllRequest from "../../../hooks/useAllRequest";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useState } from "react";
-import Swal from "sweetalert2";
 import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAllRequest from "../../hooks/useAllRequest";
+import { useState } from "react";
 
-const AllRequest = () => {
+const VolunteerAllRequest = () => {
     const axiosSecure = useAxiosSecure();
 
     const [refetch, requestData] = useAllRequest()
     const [filterData, setFilterData] = useState(requestData);
     // console.log(donner)
-    const handelDone = async (id) => {
-        const res = await axiosSecure.patch(`/request/done/${id}`);
-        console.log(res.data)
-        if (res.data.modifiedCount > 0) {
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Done",
-                showConfirmButton: false,
-                timer: 1500
-
-            });
-            refetch()
-        }
-
-    }
-    const handleDelete = (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await axiosSecure.delete(`/delete/${id}`)
-                if (res.data.deletedCount > 0) {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
-                        icon: "success"
-                    });
-                    refetch()
-                }
-
-            }
-        });
-
-    }
-    const handelCancel = async (id) => {
-        const res = await axiosSecure.patch(`/request/cancel/${id}`);
-        console.log(res.data)
-        if (res.data.modifiedCount > 0) {
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Done",
-                showConfirmButton: false,
-                timer: 1500
-
-            });
-            refetch()
-        }
-    }
     const handelForm = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -111,7 +53,7 @@ const AllRequest = () => {
                         <th>donationTime </th>
                         <th>Status</th>
                         <th>Edit</th>
-                        <th>Done</th>
+
 
                     </tr>
                 </thead>
@@ -130,20 +72,10 @@ const AllRequest = () => {
                                     <Link to={`/dashboard/update/${pending._id}`}>
                                         <button className="btn bg-green-500 text-white "><FaEdit></FaEdit></button>
                                     </Link>
-                                    <button onClick={() => handleDelete(pending._id)} className="btn bg-red-500 text-white "><MdDelete></MdDelete></button>
                                 </div>
 
                             </td>
-                            {
-                                (pending?.status === "inprogress") ? <>
-                                    <td className="">
-                                        <div className="flex ">
-                                            <button onClick={() => handelDone(pending._id)} className="btn text-white bg-green-500">Done</button>
-                                            <button onClick={() => handelCancel(pending._id)} className="btn text-white bg-red-500">canceled</button>
-                                        </div>
-                                    </td>
-                                </> : <div className="flex justify-center items-center top-4"> <h1>NotInprogress</h1></div>
-                            }
+
                         </tr>)
                     }
 
@@ -155,4 +87,4 @@ const AllRequest = () => {
     );
 };
 
-export default AllRequest;
+export default VolunteerAllRequest;

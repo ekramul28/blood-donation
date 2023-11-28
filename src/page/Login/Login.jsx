@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
@@ -9,6 +9,8 @@ const Login = () => {
     const { logInWithGoogle, login } = useAuth();
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
+    console.log(location);
     const handelForm = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -23,28 +25,28 @@ const Login = () => {
                     form.reset();
                     Swal.fire('Login Successful');
 
-                    navigate("/")
+                    navigate((location?.state?.pathname) ? location?.state.pathname : '/')
                 }
             })
             .catch((error) => {
                 setError(error.message);
             })
     }
-    const googleClick = () => {
-        logInWithGoogle()
-            .then(result => {
+    // const googleClick = () => {
+    //     logInWithGoogle()
+    //         .then(result => {
 
-                if (result.user) {
-                    Swal.fire('Login Successful')
-                    navigate('/')
+    //             if (result.user) {
+    //                 Swal.fire('Login Successful')
+    //                 navigate(location?.form?.sate)
 
-                }
+    //             }
 
-            })
-            .catch(error => {
-                console.error(error)
-            })
-    }
+    //         })
+    //         .catch(error => {
+    //             console.error(error)
+    //         })
+    // }
     return (
         <div className="hero min-h-screen bg-gray-600">
             <div className="hero-content flex-col ">
