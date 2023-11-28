@@ -3,12 +3,15 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAllDetails from "../../hooks/useAllDetails";
+import useAuth from "../../hooks/useAuth";
 
 const DetailsPage = () => {
     const { id } = useParams();
+    const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
 
     const [refetch, details] = useAllDetails()
+
     const handelConform = async () => {
         const res = await axiosSecure.patch(`/request/${id}`);
         console.log(res.data)
@@ -23,6 +26,9 @@ const DetailsPage = () => {
             refetch()
         }
 
+    }
+    const handelDonate = () => {
+        document.getElementById('my_modal_5').showModal()
     }
     return (
         <div className="">
@@ -40,12 +46,40 @@ const DetailsPage = () => {
                     <p className="text-xl font-bold"><span className="text-red-500">Blood:</span>{details?.blood}</p>
                     <p className="text-xl font-bold"><span className="text-red-500">District:</span>{details?.district}</p>
                     <p className="text-xl font-bold"><span className="text-red-500">division:</span>{details?.division}</p>
+                    <div className="flex justify-center items-center ">
+                        {/* Open the modal using document.getElementById('ID').showModal() method */}
+                        <button onClick={handelDonate} className="bg-green-500 text-white btn"> Donate</button></div>
+                    <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                        <div className="modal-box">
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Name</span>
+                                </label>
+                                <input type="name" name="name" defaultValue={user?.displayName} placeholder="Name" className="input  input-bordered" required />
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Email</span>
+                                </label>
+                                <input type="email" placeholder="email" defaultValue={user?.email} name="email" className="input  input-bordered" required />
+                            </div>
+                            <div className="modal-action">
+                                <form method="dialog">
+                                    {/* if there is a button in form, it will close the modal */}
+                                    {
+                                        (details?.status === "pending") ? <button onClick={handelConform} className="btn bg-green-500">Conform</button> : <button className="btn bg-red-500 text-white">Already conform Close it</button>
+
+                                    }
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </dialog>
+
                     <div className="card-actions justify-end">
-                        {
-                            (details?.status === "pending") ? <button onClick={handelConform} className="btn btn-primary">Conform</button> : <button disabled className="btn btn-primary">Conform</button>
 
-
-                        }
                     </div>
                 </div>
             </div>

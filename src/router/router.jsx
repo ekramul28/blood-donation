@@ -18,6 +18,7 @@ import AllRequest from "../page/allDasbord/AllRequest/AllRequest";
 import VolunteerHome from "../page/VolunteerHome/VolunteerHome";
 import VolunteerAllRequest from "../page/VolunteerAllRequest/VolunteerAllRequest";
 import PrivateRoute from "./privateRout";
+import AdminRout from "./AdminRout";
 
 const router = createBrowserRouter([
     {
@@ -89,15 +90,15 @@ const router = createBrowserRouter([
             // admin
             {
                 path: 'users',
-                element: <User></User>
+                element: <AdminRout><User></User></AdminRout>
             },
             {
                 path: 'home',
-                element: <AdminHome></AdminHome>
+                element: <AdminRout><AdminHome></AdminHome></AdminRout>
             },
             {
                 path: 'allRequest',
-                element: <AllRequest></AllRequest>
+                element: <AdminRout><AllRequest></AllRequest></AdminRout>
             },
         ]
 

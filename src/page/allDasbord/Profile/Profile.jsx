@@ -6,7 +6,7 @@ import useUser from "../../../hooks/useUser";
 const Profile = () => {
     const { user } = useAuth();
 
-    const [data] = useUser();
+    const [, data] = useUser();
     return (
         <div>
             {
