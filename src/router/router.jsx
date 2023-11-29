@@ -21,6 +21,8 @@ import PrivateRoute from "./privateRout";
 import AdminRout from "./AdminRout";
 import NoPage from "../page/Nopage/NoPage";
 import ContentManagement from "../page/ContentManagement/ContentManagement";
+import AddBlog from "../page/addBlog/AddBlog";
+import Blog from "../page/blog/Blog";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +37,10 @@ const router = createBrowserRouter([
             {
                 path: 'login',
                 element: <Login></Login>
+            },
+            {
+                path: 'blog',
+                element: <Blog></Blog>
             },
             {
                 path: 'register',
@@ -107,6 +113,10 @@ const router = createBrowserRouter([
             {
                 path: 'content',
                 element: <ContentManagement></ContentManagement>
+            },
+            {
+                path: 'addBlog',
+                element: <AddBlog></AddBlog>
             },
         ]
 
