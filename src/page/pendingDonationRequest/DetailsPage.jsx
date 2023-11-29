@@ -68,10 +68,10 @@ const DetailsPage = () => {
                                 <form method="dialog">
                                     {/* if there is a button in form, it will close the modal */}
                                     {
-                                        (details?.status === "pending") ? <button onClick={handelConform} className="btn bg-green-500">Conform</button> : <button className="btn bg-red-500 text-white">Already conform Close it</button>
+                                        (details?.status === "pending") ? <button onClick={handelConform} className="btn bg-green-500 text-white">Conform</button> : <button className="btn bg-red-500 text-white">Already conform Close it</button>
 
                                     }
-
+                                    <button className="btn bg-red-500 text-white"> Close</button>
                                 </form>
 
                             </div>
