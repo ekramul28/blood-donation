@@ -1,7 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
+import { CgController, CgProfile } from "react-icons/cg";
 import { FaHome } from "react-icons/fa";
 import { MdBloodtype } from "react-icons/md";
+import { IoGitPullRequestSharp } from "react-icons/io5";
 import useUser from "../../../hooks/useUser";
 const Dashboard = () => {
     const [, data] = useUser();
@@ -19,14 +20,17 @@ const Dashboard = () => {
                                 <NavLink to="/dashboard/users" className="flex my-4 md:text-xl font-bold gap-2 items-center"><CgProfile></CgProfile> All User</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/allRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><CgProfile></CgProfile> all Request</NavLink>
+                                <NavLink to="/dashboard/allRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><IoGitPullRequestSharp></IoGitPullRequestSharp> all Request</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/content" className="flex my-4 md:text-xl font-bold gap-2 items-center"><CgController></CgController> Content</NavLink>
                             </li>
                             <div className="divider">OR</div>
                             <li>
                                 <NavLink to="/dashboard/volunteerHome" className="flex my-4 md:text-xl font-bold gap-2 items-center"><FaHome></FaHome>Home V</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/volunteerAllRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><FaHome></FaHome>AllRequest V</NavLink>
+                                <NavLink to="/dashboard/volunteerAllRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><IoGitPullRequestSharp></IoGitPullRequestSharp>AllRequest V</NavLink>
                             </li>
 
 
@@ -42,7 +46,7 @@ const Dashboard = () => {
                                 <NavLink to="/dashboard/volunteerHome" className="flex my-4 md:text-xl font-bold gap-2 items-center"><FaHome></FaHome> Home</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/volunteerAllRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><FaHome></FaHome> Request</NavLink>
+                                <NavLink to="/dashboard/volunteerAllRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><IoGitPullRequestSharp></IoGitPullRequestSharp> Request</NavLink>
                             </li>
                             <div className="divider">OR</div>
                         </> : ""
@@ -54,10 +58,10 @@ const Dashboard = () => {
                         <NavLink to="/dashboard/profile" className="flex my-4 md:text-xl font-bold gap-2 items-center"><CgProfile></CgProfile> Profile</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/myDonationRequests" className="flex my-4 md:text-xl font-bold gap-2 items-center"><MdBloodtype></MdBloodtype> My Requests</NavLink>
+                        <NavLink to="/dashboard/myDonationRequests" className="flex my-4 md:text-xl font-bold gap-2 items-center"><IoGitPullRequestSharp></IoGitPullRequestSharp> My Requests</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/donationRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><MdBloodtype></MdBloodtype> My All Request</NavLink>
+                        <NavLink to="/dashboard/donationRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><MdBloodtype></MdBloodtype> Request</NavLink>
                     </li>
                     <div className="divider">OR</div>
                     <li>

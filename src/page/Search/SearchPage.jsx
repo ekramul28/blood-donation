@@ -1,9 +1,27 @@
 import useAllDivision from "../../hooks/useAllDivision";
 import useAllDistrict from "../../hooks/useAllDistrict";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SearchPage = () => {
     const AllDivision = useAllDivision();
     const AllDistrict = useAllDistrict();
+    const axiosPublic = useAxiosPublic();
+    const [search, setSearch] = useState([]);
+    const handelForm = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const division = form.division.value;
+        const district = form.district.value;
+        const blood = form.blood.value
+        const value = { email, district, division, blood };
+        console.log(value);
+        const res = await axiosPublic.get(`/search?email=${email}&division=${division}&district=${district}&blood=${blood}`)
+        setSearch(res?.data);
+
+    }
     return (
         <div className="lg:flex">
             <div className=" ">
@@ -17,8 +35,8 @@ const SearchPage = () => {
                         <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                         <ul className="menu p-4  min-h-full bg-base-200 text-base-content">
                             {/* Sidebar content here */}
-                            <form>
-                                <select className="select select-bordered input w-full " required>
+                            <form onSubmit={handelForm}>
+                                <select name="blood" className="select select-bordered input w-full " required>
                                     <option disabled selected>Select Your Blood Group</option>
                                     <option >A+</option>
                                     <option >A- </option>
@@ -34,7 +52,7 @@ const SearchPage = () => {
                                     <label className="label">
                                         <span className="label-text">Division</span>
                                     </label>
-                                    <select className="select select-bordered w-full  input " required>
+                                    <select name="division" className="select select-bordered w-full  input " required>
                                         <option disabled selected required>Select Your Division</option>
                                         {
                                             AllDivision.map(division => <option key={division.id}>{division.name}</option>)
@@ -46,7 +64,7 @@ const SearchPage = () => {
                                     <label className="label">
                                         <span className="label-text">Division</span>
                                     </label>
-                                    <select className="select select-bordered w-full  input ">
+                                    <select name="district" className="select select-bordered w-full  input ">
                                         <option disabled selected required>Select Your District</option>
                                         {
                                             AllDistrict.map(district => <option key={district.id}>{district.name}</option>)
@@ -72,7 +90,40 @@ const SearchPage = () => {
                 </div>
             </div>
             <div className="">
-                ok
+                <table className="table ">
+                    {/* head */}
+                    <thead className="">
+                        <tr className="bg-red-500 text-white w-full">
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Division</th>
+                            <th>District </th>
+                            <th>DonationDate </th>
+                            <th>donationTime </th>
+                            <th>Status</th>
+                            <th>Details </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            search.map((pending, index) => <tr key={pending._id} className="bg-base-200">
+                                <th>{index + 1}</th>
+                                <td>{pending?.name}</td>
+                                <td>{pending?.division}</td>
+                                <td>{pending?.district}</td>
+                                <td>{pending?.donationDate}</td>
+                                <td>{pending?.donationTime}</td>
+                                <td>{pending?.status}</td>
+                                <Link to={`/details/${pending._id}`}>
+                                    <button className="btn mt-1 bg-green-500 text-white">Details</button>
+                                </Link>
+                            </tr>)
+                        }
+
+
+
+                    </tbody>
+                </table>
             </div>
         </div>
     );

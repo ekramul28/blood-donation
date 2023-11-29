@@ -20,6 +20,7 @@ import VolunteerAllRequest from "../page/VolunteerAllRequest/VolunteerAllRequest
 import PrivateRoute from "./privateRout";
 import AdminRout from "./AdminRout";
 import NoPage from "../page/Nopage/NoPage";
+import ContentManagement from "../page/ContentManagement/ContentManagement";
 
 const router = createBrowserRouter([
     {
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
             {
                 path: 'allRequest',
                 element: <AdminRout><AllRequest></AllRequest></AdminRout>
+            },
+            {
+                path: 'content',
+                element: <ContentManagement></ContentManagement>
             },
         ]
 
