@@ -1,16 +1,45 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAllDetails from "../../../hooks/useAllDetails";
 import useAuth from "../../../hooks/useAuth";
 import useAllDistrict from "../../../hooks/useAllDistrict";
 import useAllDivision from "../../../hooks/useAllDivision";
+import Swal from "sweetalert2";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const UpdatePage = () => {
     const [, details] = useAllDetails();
     const { user } = useAuth();
     const District = useAllDistrict();
     const AllDivision = useAllDivision();
-    const handelForm = () => {
+    const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
+    const handelForm = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const recipientName = form.recipientName.value;
+        const hospitalName = form.hospitalName.value;
+        const message = form.message.value;
+        const division = form.division.value;
+        const district = form.district.value;
+        const blood = form.blood.value;
+        const donationDate = form.donationDate.value;
+        const donationTime = form.donationTime.value;
+        const value = { name, email, recipientName, hospitalName, message, division, district, blood, donationDate, donationTime }
+        console.log(value);
+        try {
+            const data = await axiosPublic.patch(`/update/${details?._id}`, value)
+            console.log(data.data);
+            if (data?.data?.modifiedCount > 0) {
+                form.reset();
+                Swal.fire('Update successful ')
+                navigate("/dashboard/myDonationRequests")
+            }
 
+        } catch (error) {
+            console.log(error)
+        }
     }
     console.log(details)
     return (
@@ -110,7 +139,7 @@ const UpdatePage = () => {
                                     <label className="label">
                                         <span className="label-text">Donation date</span>
                                     </label>
-                                    <input type="date" defaultValue={details?.date} placeholder="donation date" name="donationDate" className="file-input  input-bordered" required />
+                                    <input type="date" defaultValue={details?.donationDate} placeholder="donation date" name="donationDate" className="file-input  input-bordered" required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
