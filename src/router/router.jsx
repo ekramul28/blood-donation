@@ -23,6 +23,7 @@ import NoPage from "../page/Nopage/NoPage";
 import ContentManagement from "../page/ContentManagement/ContentManagement";
 import AddBlog from "../page/addBlog/AddBlog";
 import Blog from "../page/blog/Blog";
+import Payment from "../page/payment/Payment";
 
 const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
             {
                 path: 'search',
                 element: <SearchPage></SearchPage>
+            },
+            {
+                path: 'payment',
+                element: <Payment></Payment>
             },
             {
                 path: 'pendingRequest',

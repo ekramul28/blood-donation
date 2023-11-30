@@ -12,14 +12,15 @@ const SearchPage = () => {
     const handelForm = async (e) => {
         e.preventDefault();
         const form = e.target;
-        const email = form.email.value;
+
         const division = form.division.value;
         const district = form.district.value;
         const blood = form.blood.value
-        const value = { email, district, division, blood };
+        const value = { district, division, blood };
         console.log(value);
-        const res = await axiosPublic.get(`/search?email=${email}&division=${division}&district=${district}&blood=${blood}`)
+        const res = await axiosPublic.get(`/search?division=${division}&district=${district}&blood=${blood}`)
         setSearch(res?.data);
+        form.reset();
 
     }
     return (
@@ -72,12 +73,7 @@ const SearchPage = () => {
 
                                     </select>
                                 </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">Email</span>
-                                    </label>
-                                    <input type="email" placeholder="email" name="email" className="input  input-bordered" required />
-                                </div>
+
                                 <div className="flex items-center justify-center mt-4">
 
                                     <input type="submit" value="Search" className="btn bg-red-600 border-none text-white" />
