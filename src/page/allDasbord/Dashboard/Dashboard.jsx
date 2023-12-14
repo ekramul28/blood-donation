@@ -4,10 +4,15 @@ import { FaHome } from "react-icons/fa";
 import { MdBloodtype } from "react-icons/md";
 import { IoGitPullRequestSharp } from "react-icons/io5";
 import useUser from "../../../hooks/useUser";
+
+import { Element, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 const Dashboard = () => {
     const [, data] = useUser();
+
+
     return (
-        <div className="md:flex  ">
+        <div className="md:flex h-screen  ">
             <div className="  md:w-1/4">
                 <ul className="     min-h-full bg-orange-300 p-2 md:p-6 text-white ">
                     {
@@ -72,8 +77,26 @@ const Dashboard = () => {
 
 
             <div className=" md:w-3/4 min-h-screen">
-                {/* Page content here */}
-                <Outlet></Outlet>
+
+                <Element className="element" id="scroll-container" style={{
+                    position: 'relative',
+                    height: '100vh',
+                    overflow: 'scroll',
+                    marginBottom: '100px'
+                }}>
+
+                    <Element name="scroll-container-first-element" style={{
+                        marginBottom: '200px'
+                    }}>
+                        <Outlet></Outlet>
+
+                    </Element>
+                </Element>
+
+
+
+
+
             </div>
 
         </div>

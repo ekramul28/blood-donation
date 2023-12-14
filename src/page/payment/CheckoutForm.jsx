@@ -1,8 +1,12 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
 import HelmetAll from '../../shared/Helmet/HelmetAll';
+import useAuth from '../../hooks/useAuth';
 
 const CheckoutForm = () => {
+    // const {user}=useAuth();
+    // const [clientSecret, setClientSecret] = useState('')
+    // const [transactionId, setTransactionId] = useState('');
     const stripe = useStripe();
     const element = useElements();
     const [error, setError] = useState('');
@@ -26,6 +30,17 @@ const CheckoutForm = () => {
             console.log(paymentMethod);
             setError(' ')
         }
+
+        // const {paymentIntent,error:confirmError}=await stripe.confirmCardPayment(clientSecret,{
+        //     payment_method:{
+        //         card:card,
+        //         billing_details:{
+        //             email: user?.email || 'anonymous',
+        //             name: user?.displayName || 'anonymous'
+        //         }
+        //     }
+        // })
+
     }
     return (
         <div className='card bg-slate-100 pt-8'>
