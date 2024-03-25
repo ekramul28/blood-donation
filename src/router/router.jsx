@@ -17,7 +17,7 @@ import UpdatePage from "../page/allDasbord/UpdatePage/UpdatePage";
 import AllRequest from "../page/allDasbord/AllRequest/AllRequest";
 import VolunteerHome from "../page/VolunteerHome/VolunteerHome";
 import VolunteerAllRequest from "../page/VolunteerAllRequest/VolunteerAllRequest";
-import PrivateRoute from "./privateRout";
+import PrivateRoute from "./PrivateRout";
 import AdminRout from "./AdminRout";
 import NoPage from "../page/Nopage/NoPage";
 import ContentManagement from "../page/ContentManagement/ContentManagement";
