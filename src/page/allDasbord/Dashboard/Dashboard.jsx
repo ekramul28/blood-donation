@@ -14,7 +14,7 @@ const Dashboard = () => {
     return (
         <div className="md:flex h-screen  ">
             <div className="  md:w-1/4">
-                <ul className="     min-h-full bg-orange-300 p-2 md:p-6 text-white ">
+                <ul className="     min-h-full bg-black  p-2 md:p-6 text-white ">
                     {
 
                         (data?.Role === 'admin') ? <>
@@ -68,7 +68,7 @@ const Dashboard = () => {
                     <li>
                         <NavLink to="/dashboard/donationRequest" className="flex my-4 md:text-xl font-bold gap-2 items-center"><MdBloodtype></MdBloodtype> Request</NavLink>
                     </li>
-                    <div className="divider">OR</div>
+                    <div className="divider ">OR</div>
                     <li>
                         <NavLink to="/" className="flex my-4 md:text-xl font-bold gap-2 items-center"><FaHome></FaHome> Home</NavLink>
                     </li>
