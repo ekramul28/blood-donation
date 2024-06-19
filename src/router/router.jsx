@@ -24,111 +24,127 @@ import ContentManagement from "../page/ContentManagement/ContentManagement";
 import AddBlog from "../page/addBlog/AddBlog";
 import Blog from "../page/blog/Blog";
 import Payment from "../page/payment/Payment";
+import DashboardProfile from "../page/allDasbord/DashboardProfile/DashboardProfile";
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <Root></Root>,
+    errorElement: <NoPage></NoPage>,
+    children: [
+      {
         path: "/",
-        element: <Root></Root>,
-        errorElement: <NoPage></NoPage>,
-        children: [
-            {
-                path: '/',
-                element: <Home></Home>
-            },
-            {
-                path: 'login',
-                element: <Login></Login>
-            },
-            {
-                path: 'blog',
-                element: <Blog></Blog>
-            },
-            {
-                path: 'register',
-                element: <Register></Register>
-            },
-            {
-                path: 'search',
-                element: <SearchPage></SearchPage>
-            },
-            {
-                path: 'payment',
-                element: <Payment></Payment>
-            },
-            {
-                path: 'pendingRequest',
-                element: <PendingDonationRequest></PendingDonationRequest>
-            },
-            {
-                path: 'details/:id',
-                element: <PrivateRoute><DetailsPage></DetailsPage></PrivateRoute>,
-            },
+        element: <Home></Home>,
+      },
+      {
+        path: "login",
+        element: <Login></Login>,
+      },
+      {
+        path: "blog",
+        element: <Blog></Blog>,
+      },
+      {
+        path: "register",
+        element: <Register></Register>,
+      },
+      {
+        path: "search",
+        element: <SearchPage></SearchPage>,
+      },
+      {
+        path: "payment",
+        element: <Payment></Payment>,
+      },
+      {
+        path: "pendingRequest",
+        element: <PendingDonationRequest></PendingDonationRequest>,
+      },
+      {
+        path: "details/:id",
+        element: (
+          <PrivateRoute>
+            <DetailsPage></DetailsPage>
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    errorElement: <NoPage></NoPage>,
+    children: [
+      {
+        path: "dashboards",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "profile",
+        element: <Profile></Profile>,
+        // element: <DashboardProfile></DashboardProfile>,
+      },
 
-
-        ],
-
-    },
-    {
-        path: 'dashboard',
-        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
-        errorElement: <NoPage></NoPage>,
-        children: [
-            {
-                path: 'dashboards',
-                element: <DashboardHome></DashboardHome>
-            },
-            {
-                path: 'profile',
-                element: <Profile></Profile>
-            },
-           
-            {
-                path: 'myDonationRequests',
-                element: <MyDonationRequests></MyDonationRequests>
-            },
-            {
-                path: 'donationRequest',
-                element: <DonationRequest></DonationRequest>
-            },
-            {
-                path: 'update/:id',
-                element: <UpdatePage></UpdatePage>
-            },
-            // Volunteer
-            {
-                path: 'volunteerHome',
-                element: <VolunteerHome></VolunteerHome>
-            },
-            {
-                path: 'volunteerAllRequest',
-                element: <VolunteerAllRequest></VolunteerAllRequest>
-            },
-            // admin
-            {
-                path: 'users',
-                element: <AdminRout><User></User></AdminRout>
-            },
-            {
-                path: 'home',
-                element: <AdminRout><AdminHome></AdminHome></AdminRout>
-            },
-            {
-                path: 'allRequest',
-                element: <AdminRout><AllRequest></AllRequest></AdminRout>
-            },
-            {
-                path: 'content',
-                element: <ContentManagement></ContentManagement>
-            },
-            {
-                path: 'addBlog',
-                element: <AddBlog></AddBlog>
-            },
-        ]
-
-    }
-
+      {
+        path: "myDonationRequests",
+        element: <MyDonationRequests></MyDonationRequests>,
+      },
+      {
+        path: "donationRequest",
+        element: <DonationRequest></DonationRequest>,
+      },
+      {
+        path: "update/:id",
+        element: <UpdatePage></UpdatePage>,
+      },
+      // Volunteer
+      {
+        path: "volunteerHome",
+        element: <VolunteerHome></VolunteerHome>,
+      },
+      {
+        path: "volunteerAllRequest",
+        element: <VolunteerAllRequest></VolunteerAllRequest>,
+      },
+      // admin
+      {
+        path: "users",
+        element: (
+          <AdminRout>
+            <User></User>
+          </AdminRout>
+        ),
+      },
+      {
+        path: "home",
+        element: (
+          <AdminRout>
+            <AdminHome></AdminHome>
+          </AdminRout>
+        ),
+      },
+      {
+        path: "allRequest",
+        element: (
+          <AdminRout>
+            <AllRequest></AllRequest>
+          </AdminRout>
+        ),
+      },
+      {
+        path: "content",
+        element: <ContentManagement></ContentManagement>,
+      },
+      {
+        path: "addBlog",
+        element: <AddBlog></AddBlog>,
+      },
+    ],
+  },
 ]);
-
 
 export default router;

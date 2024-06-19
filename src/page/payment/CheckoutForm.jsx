@@ -1,78 +1,143 @@
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useState } from 'react';
-import HelmetAll from '../../shared/Helmet/HelmetAll';
-import useAuth from '../../hooks/useAuth';
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const CheckoutForm = () => {
-    // const {user}=useAuth();
-    // const [clientSecret, setClientSecret] = useState('')
-    // const [transactionId, setTransactionId] = useState('');
-    const stripe = useStripe();
-    const element = useElements();
-    const [error, setError] = useState('');
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!stripe || !element) {
-            return;
-        }
-        const card = element.getElement(CardElement);
-        if (card == null) {
-            return;
-        }
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card,
-        })
-        if (error) {
-            console.log(error);
-            setError(error.message)
-        } else {
-            console.log(paymentMethod);
-            setError(' ')
-        }
+  const [error, setError] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
 
-        // const {paymentIntent,error:confirmError}=await stripe.confirmCardPayment(clientSecret,{
-        //     payment_method:{
-        //         card:card,
-        //         billing_details:{
-        //             email: user?.email || 'anonymous',
-        //             name: user?.displayName || 'anonymous'
-        //         }
-        //     }
-        // })
+  const [transaction, setTransaction] = useState(null);
+  const stripe = useStripe();
+  const elements = useElements();
+  const axiosSecure = useAxiosSecure();
 
+  const [price, setPrice] = useState(1);
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    axiosSecure
+      .post("/create-payment-intent", { price: price })
+      .then((res) => {
+        console.log("sdfsdfsdf", res.data.clientSecret);
+        setClientSecret(res.data.clientSecret);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [axiosSecure]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
     }
-    return (
-        <div className='card bg-slate-100 pt-8'>
-            <HelmetAll title={"grant || payment"}></HelmetAll>
 
-            <form onSubmit={handleSubmit} className=' w-96 mx-auto  '>
-                <CardElement className='input py-5 text-red-500'
-                    options={{
-                        style: {
-                            base: {
+    const card = elements.getElement(CardElement);
+    if (card === null) {
+      return;
+    }
 
-                                fontSize: '16px',
-                                color: '#424770',
-                                '::placeholder': {
-                                    color: '#aab7c4',
-                                },
-                            },
-                            invalid: {
-                                color: '#9e2146',
-                            },
-                        },
-                    }}
-                >
-                </CardElement>
-                <div className='flex justify-center items-center mt-5'>
-                    <button className='btn bg-green-500 text-white ' type='submit' disabled={!stripe} >Pay</button>
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card,
+    });
 
-                </div>
-                <h1 className='text-red-600 py-3'>{error}</h1>
-            </form>
+    if (error) {
+      console.log("payment error", error);
+      setError(error.message);
+    } else {
+      console.log("payment method", paymentMethod);
+      setError("");
+    }
+
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            email: user?.email || "anonymous",
+            name: user?.displayName || "anonymous",
+          },
+        },
+      });
+    if (confirmError) {
+      console.log("confirm error");
+    } else {
+      console.log("payment intent", paymentIntent);
+      if (paymentIntent.status === "succeeded") {
+        setTransaction(paymentIntent.id);
+
+        const funding = {
+          fund: price,
+        };
+        axiosSecure
+          .post("/funds", funding)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    }
+  };
+  return (
+    <div>
+      <form
+        className="w-[40%] mx-auto p-10 shadow-lg space-y-4"
+        onSubmit={handleSubmit}
+      >
+        <div className="border border-gray-500 p-4 rounded-lg">
+          <CardElement
+            options={{
+              style: {
+                base: {
+                  fontSize: "16px",
+                  color: "#424770",
+                  "::placeholder": {
+                    color: "#aab7c4",
+                  },
+                },
+                invalid: {
+                  color: "#9e2146",
+                },
+                border: "1px solid black",
+              },
+            }}
+          ></CardElement>
         </div>
-    );
+        <div>
+          <input
+            placeholder="Enter Your Donation Amount"
+            className="border w-full  focus:outline focus:outline-gray-500 border-gray-400 p-3 rounded-lg placeholder:font-semibold placeholder:text-[#9CA3AF]/90"
+            type="number"
+            onBlur={(e) => setPrice(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="text-center">
+          <button
+            type="submit"
+            className="bg-red-500 active:bg-red-700 px-8 py-2  rounded-lg text-white font-semibold my-6"
+            disabled={!stripe || !clientSecret}
+          >
+            Donate
+          </button>
+        </div>
+        <p className="text-red-500">{error}</p>
+        {transaction && (
+          <p className="text-green-500">
+            Transaction ID: <span className="font-semibold">{transaction}</span>{" "}
+            was successful
+          </p>
+        )}
+      </form>
+    </div>
+  );
 };
 
 export default CheckoutForm;
